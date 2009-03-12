@@ -4,7 +4,6 @@ require 'tempfile'
 require 'pathname'
 require 'shell'
 
-
 class DynomiteLauncher
   
   @dynomite_path = "/usr/local/dynomite"

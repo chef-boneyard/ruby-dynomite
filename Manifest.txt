@@ -8,4 +8,7 @@ lib/dynomite.rb
 lib/dynomite/launcher.rb
 lib/dynomite/config.rb
 lib/dynomite/client.rb
+lib/thrift/Dynomite.rb
+lib/thrift/dynomite_constants.rb
+lib/thrift/dynomite_types.rb
 test/test_dynomite.rb
