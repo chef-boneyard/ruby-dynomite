@@ -1,0 +1,22 @@
+* Dynomite Client lib
+** DONE create dynomite config object
+   CLOSED: [2009-03-12 Thu 13:23]
+** DONE set config values over the defaults
+   CLOSED: [2009-03-12 Thu 13:23]
+** DONE emit json to tmpfile
+   CLOSED: [2009-03-12 Thu 13:24]
+** DONE feed temp file to dynomite launch script
+   CLOSED: [2009-03-12 Thu 13:24]
+*** or set up to run via runit?
+    http://smarden.org/runit/
+    http://rubyworks.rubyforge.org/manual/runit.html
+
+
+** DONE stop all dynomite processes by finding pids
+   CLOSED: [2009-03-12 Thu 13:24]
+** DONE stop one or more dynomite nodes by config
+   CLOSED: [2009-03-12 Thu 13:36]
+** TODO Document current classes & methods
+** TODO add membership, bench, console, methods
+** TODO add correct logging
+** TODO dynomite node tracking in an instance?

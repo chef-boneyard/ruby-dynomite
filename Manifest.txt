@@ -1,0 +1,10 @@
+History.txt
+Manifest.txt
+README.txt
+LICENSE
+NOTICE
+Rakefile
+lib/dynomite.rb
+lib/dynomite/launcher.rb
+lib/dynomite/config.rb
+test/test_dynomite.rb
