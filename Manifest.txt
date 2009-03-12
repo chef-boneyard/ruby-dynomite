@@ -7,4 +7,5 @@ Rakefile
 lib/dynomite.rb
 lib/dynomite/launcher.rb
 lib/dynomite/config.rb
+lib/dynomite/client.rb
 test/test_dynomite.rb
