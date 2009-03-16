@@ -16,9 +16,10 @@ module Dynomite
     attr_accessor :cluster_name
     attr_accessor :cache
     attr_accessor :cache_size
+    attr_accessor :log_directory
     
     alias :partitioning_constant :q
-    alias :number_of_nodes :n
+    alias :replicas :n
     alias :write_constant :w
     alias :read_constant :r
 
@@ -27,7 +28,7 @@ module Dynomite
       :text_port=>11222,
       :thrift_port=>9200,
       :web_port=>8080,
-      :directory=> %Q{/tmp/data},
+      :directory=> %Q{/var/db/dynomite},
       :storage_mod=>%Q{dets_storage},
       :cache=>true,
       :cache_size=>128000,
@@ -37,6 +38,7 @@ module Dynomite
       :q=>6,
       :node_name=>%Q{dynomite_node},
       :cluster_name=>%Q{dynomite_cluster},
+      :log_directory=>"",
     }
 
     def initialize(params={ })

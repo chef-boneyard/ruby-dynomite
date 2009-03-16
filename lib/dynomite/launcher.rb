@@ -27,7 +27,8 @@ module Dynomite
         tf.close
 
         join_clause = join.nil? ? "" : "-j #{join}"
-        commandline = "#{self.install_path}/bin/dynomite start #{join_clause.strip} -o #{config.node_name} -n #{config.cluster_name} --config #{tf.path} -d" 
+        log_directory = config.log_directory.empty? ? "" : "-l \"#{config.log_directory}\""
+        commandline = "#{self.install_path}/bin/dynomite start #{join_clause} #{log_directory} -o #{config.node_name} -n #{config.cluster_name} --config #{tf.path} -d" 
         system(commandline)
         Node.new(:config=>config, :commandline=>commandline)
       rescue
