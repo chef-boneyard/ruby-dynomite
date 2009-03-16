@@ -8,7 +8,7 @@ require 'thrift'
 require 'thrift/protocol/tprotocol'
 require 'dynomite_types'
 
-module Dynomite
+module DynomiteInternal
   class Client
     include ThriftClient
 

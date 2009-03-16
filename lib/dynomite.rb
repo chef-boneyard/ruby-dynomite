@@ -1,3 +1,5 @@
-class Dynomite
-  VERSION = '1.0.0'
-end
+
+require 'dynomite/config'
+require 'dynomite/launcher'
+require 'dynomite/client'
+
