@@ -5,6 +5,7 @@ require 'pathname'
 require 'shell'
 
 require 'dynomite/config'
+require 'dynomite/node'
 
 module Dynomite
 
@@ -28,7 +29,7 @@ module Dynomite
         join_clause = join.nil? ? "" : "-j #{join}"
         commandline = "#{self.install_path}/bin/dynomite start #{join_clause.strip} -o #{config.node_name} -n #{config.cluster_name} --config #{tf.path} -d" 
         system(commandline)
-        
+        Node.new(:config=>config, :commandline=>commandline)
       rescue
         STDERR.puts "Start failed!: #{$!}"
       end
@@ -57,20 +58,23 @@ module Dynomite
 
     def build_cluster(config_base)
     end
-    
-    def list_all
-      # Find the running dynomite processes:  
-      pids = `ps axuwww | grep erl | grep dynomite | grep -v grep | cut -d ' ' -f 8`.split("\n").map { |pid| pid.to_i}
-    end
-    
-    def kill_all
-      # Find the running dynomite processes:  
-      list_all.each do |pid|
-        begin
-          Process.kill("TERM", pid)
-        rescue Errno::ESRCH
+
+    class << self
+      def list_all
+        # Find the running dynomite processes:  
+        pids = `ps axuwww | grep erl | grep dynomite | grep -v grep | cut -d ' ' -f 8`.split("\n").map { |pid| pid.to_i}
+      end
+      
+      def kill_all
+        # Find the running dynomite processes:  
+        list_all.each do |pid|
+          begin
+            Process.kill("TERM", pid)
+          rescue Errno::ESRCH
+          end
         end
       end
+      
     end
   end
 
