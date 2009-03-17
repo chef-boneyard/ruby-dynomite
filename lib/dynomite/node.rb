@@ -68,6 +68,8 @@ module Dynomite
       DEFAULT_JSON_CONFIG.keys.each do |config_key|
         instance_variable_set("@#{config_key}".to_sym, vars[config_key])
       end
+
+      @cookie = Digest::MD5.hexdigest(cluster_name + "NomMxnLNUH8suehhFg2fkXQ4HVdL2ewXwM")      
     end
 
     def start(join="")
@@ -76,8 +78,7 @@ module Dynomite
         configfile = Tempfile.new("dynomite-config")
         configfile.puts to_json
         configfile.close
-        
-        @cookie = Digest::MD5.hexdigest(cluster_name + "NomMxnLNUH8suehhFg2fkXQ4HVdL2ewXwM")
+
         join_clause = join.empty? ? "" : "-dynomite jointo \"#{join}\""
         log_clause =  log_directory.empty? ? "" : %Q[-kernel error_logger '{file,"#{File.join(log_directory, 'dynomite.log')}"}' -sasl sasl_error_logger '{file,"#{File.join(log_directory, 'sasl.log')}"}']
         detach_clause  = self.detached.nil? ? "" : " -detached "
