@@ -3,8 +3,7 @@ require 'thrift'
 require 'thrift/transport/tsocket'
 require 'thrift/protocol/tbinaryprotocol'
 
-require 'dynomite/config'
-require 'dynomite/launcher'
+require 'dynomite/node'
 
 $:.unshift(File.join(File.dirname(__FILE__), "..", "thrift"))
 require 'Dynomite.rb'
