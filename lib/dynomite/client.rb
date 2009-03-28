@@ -20,16 +20,11 @@ module Dynomite
       @socket = Thrift::TSocket.new(config[:host], config[:port])
       @protocol = config[:protocol].new(config[:transport].new(@socket))
       super(@protocol)
-
-      if block_given?
-        connect
-        yield self
-        disconnect
-      end
     end
 
     def connect
       @tcp_socket = @socket.open
+      self
     end
 
     def disconnect
