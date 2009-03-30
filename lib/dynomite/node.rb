@@ -86,8 +86,12 @@ module Dynomite
         commandline = %Q[erl -boot start_sasl +K true +A 128 +P 60000 -smp enable -pz #{install_path}/ebin/ -pz #{install_path}/deps/mochiweb/ebin -pz #{install_path}/deps/rfc4627/ebin -pz #{install_path}/deps/thrift/ebin -sname \"#{self.node_name}\" ] + join_clause + log_clause + %Q[ -dynomite config  "\\"#{configfile.path}\\"" -setcookie #{cookie} -noshell -run dynomite start ] + detach_clause
        #  #{options[:profile]}"
 
-        stdin, stdout, stderr = '', '', ''
-        process_status = spawn commandline, 'stdin' => stdin, 'stdout' => stdout, 'stderr' => stderr
+        if detached
+          process_status = spawn commandline, 'stdin' => stdin, 'stdout' => stdout, 'stderr' => stderr
+        else
+          system(commandline)
+        end
+
         self
       rescue
         STDERR.puts "Start failed!: #{$!}, process status: #{process_status}"

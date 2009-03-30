@@ -6,14 +6,13 @@ require 'rubygems/specification'
 require 'date'
 require 'spec/rake/spectask'
 require 'cucumber/rake/task'
-require 'hoe'
 
 GEM = "dynomite"
 GEM_VERSION = "0.0.1"
 AUTHOR = "Opscode, Inc."
 EMAIL = "legal@opscode.com"
 HOMEPAGE = "http://www.opscode.com"
-SUMMARY = "A high speed guid create & store service"
+SUMMARY = "Drives Cliff Moon's 'dynomite' - an Erlang implementation of Amazon's Dynamo"
 
 spec = Gem::Specification.new do |s|
   s.name = GEM
