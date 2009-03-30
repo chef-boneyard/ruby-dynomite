@@ -79,7 +79,7 @@ module Dynomite
         configfile.puts to_json
         configfile.close
 
-        join_clause = join.empty? ? "" : "-dynomite jointo \"#{join}\""
+        join_clause = join.empty? ? "" : "-dynomite jointo \"'#{join}'\""
         log_clause =  log_directory.empty? ? "" : %Q[-kernel error_logger '{file,"#{File.join(log_directory, 'dynomite.log')}"}' -sasl sasl_error_logger '{file,"#{File.join(log_directory, 'sasl.log')}"}']
         detach_clause  = self.detached.nil? ? "" : " -detached "
         
