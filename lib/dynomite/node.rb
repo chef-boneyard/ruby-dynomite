@@ -87,6 +87,7 @@ module Dynomite
        #  #{options[:profile]}"
 
         if detached
+          stdin, stdout, stderr = '', '', ''
           process_status = spawn commandline, 'stdin' => stdin, 'stdout' => stdout, 'stderr' => stderr
         else
           system(commandline)
