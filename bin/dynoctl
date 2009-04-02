@@ -48,13 +48,21 @@ module Dynomite
       arg = parse_options(args)
       Dynomite::Config.merge!(config)
       
-      node_config = { :n=>:nodes, :r=>:readers,
+      node_config = {
+        :n=>:nodes, :r=>:readers,
         :w=>:writers, :detached=>:detached,
-        :node_name=>:node_name}.inject({ }) { |memo,pair|
+        :node_name=>:node_name
+      }.inject({ }) { |memo,pair|
         memo[pair[0]]=Dynomite::Config[pair[1]]; memo
       }.delete_if{ |k,v| v.nil? }
+      
+      dn = Dynomite::Node.new( node_config )
 
-      Dynomite::Node.new( node_config ).start(:join=>Dynomite::Config[:join])
+      if Dynomite::Config[:join]
+        dn.start(:join=>Dynomite::Config[:join])
+      else
+        dn.start
+     end
     end    
   end
   
