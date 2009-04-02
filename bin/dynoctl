@@ -1,0 +1,63 @@
+#!/usr/bin/ruby
+
+$: << File.join(File.dirname(__FILE__), "..", "lib")
+
+require 'rubygems'
+require 'mixlib/cli'
+require 'dynomite'
+require 'dynomite/config'
+
+module Dynomite
+
+  
+  class CLI
+    include Mixlib::CLI
+
+    option :nodes,
+    :short => '-n NODES',
+    :long => '--nodes NODES',
+    :description => 'Number of nodes in the cluster'
+
+    option :readers,
+    :short => '-r READERS',
+    :long => '--readers READERS',
+    :description => "Number of readers"
+
+    option :writers,
+    :short => '-r WRITERS',
+    :long => '--writers WRITERS',
+    :description => "Number of writers"  
+    
+    option :detached,
+    :short => '-d',
+    :long => '--detached',
+    :description => "Detach from console (daemonize)"
+    
+    option :cluster_name,
+    :short => '-c CLUSTER_NAME',
+    :long => '--cluster CLUSTER_NAME',
+    :description => "Name of the Dynomite cluster"
+    
+    option :node_name,
+    :short => '-o NODE_NAME',
+    :long => '--node NODE_NAME',
+    :description => "Name of this Dynomite node"
+    
+    
+    def run(args=ARGV)
+      arg = parse_options(args)
+      Dynomite::Config.merge!(config)
+      
+      node_config = { :n=>:nodes, :r=>:readers,
+        :w=>:writers, :detached=>:detached,
+        :node_name=>:node_name}.inject({ }) { |memo,pair|
+        memo[pair[0]]=Dynomite::Config[pair[1]]; memo
+      }.delete_if{ |k,v| v.nil? }
+
+      Dynomite::Node.new( node_config ).start(:join=>Dynomite::Config[:join])
+    end    
+  end
+  
+end
+
+Dynomite::CLI.new.run

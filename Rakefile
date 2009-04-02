@@ -32,6 +32,7 @@ spec = Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.autorequire = GEM
   s.files = %w(Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
+  s.executables = "dynoctl"
 end
 
 task :default => :spec
