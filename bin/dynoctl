@@ -24,7 +24,7 @@ module Dynomite
     :description => "Number of readers"
 
     option :w,
-    :short => '-r WRITERS',
+    :short => '-w WRITERS',
     :long => '--writers WRITERS',
     :description => "Number of writers"  
     
@@ -59,7 +59,7 @@ module Dynomite
     :description => "Port for Thrift protocol"
     
     option :web_port,
-    :short => '-w WEB_PORT',
+    :short => '-h WEB_PORT',
     :long => '--web-port WEB_PORT',
     :description => "Port for web (HTTP)"
     
