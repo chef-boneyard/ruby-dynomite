@@ -13,25 +13,25 @@ module Dynomite
   class CLI
     include Mixlib::CLI
 
-    option :nodes,
+    option :n,
     :short => '-n NODES',
     :long => '--nodes NODES',
     :description => 'Number of nodes in the cluster'
 
-    option :readers,
+    option :r,
     :short => '-r READERS',
     :long => '--readers READERS',
     :description => "Number of readers"
 
-    option :writers,
+    option :w,
     :short => '-r WRITERS',
     :long => '--writers WRITERS',
     :description => "Number of writers"  
     
     option :detached,
-    :short => '-d',
-    :long => '--detached',
-    :description => "Detach from console (daemonize)"
+    :short => '-b',
+    :long => '--background',
+    :description => "Run in background (Detach from console)"
     
     option :cluster_name,
     :short => '-c CLUSTER_NAME',
@@ -43,20 +43,40 @@ module Dynomite
     :long => '--node NODE_NAME',
     :description => "Name of this Dynomite node"
     
+    option :join,
+    :short => '-j NODE_NAME',
+    :long => '--join NODE_NAME',
+    :description => "Name of a Dynomite node to join to form a cluster"
+
+    option :text_port,
+    :short => '-a ASCII_PORT',
+    :long => '--ascii-port ASCII_PORT',
+    :description => "Port for ASCII protocol"
+    
+    option :thrift_port,
+    :short => '-t THRIFT_PORT',
+    :long => '--thrift-port THRIFT_PORT',
+    :description => "Port for Thrift protocol"
+    
+    option :web_port,
+    :short => '-w WEB_PORT',
+    :long => '--web-port WEB_PORT',
+    :description => "Port for web (HTTP)"
+    
+    option :directory,
+    :short => '-d DIRECTORY',
+    :long => '--directory DIRECTORY',
+    :description => "Data directory"
     
     def run(args=ARGV)
       arg = parse_options(args)
       Dynomite::Config.merge!(config)
       
-      node_config = {
-        :n=>:nodes, :r=>:readers,
-        :w=>:writers, :detached=>:detached,
-        :node_name=>:node_name
-      }.inject({ }) { |memo,pair|
-        memo[pair[0]]=Dynomite::Config[pair[1]]; memo
-      }.delete_if{ |k,v| v.nil? }
+      [:thrift_port, :web_port, :text_port].each do |port|
+        Dynomite::Config[port] = Dynomite::Config[port].to_i if Dynomite::Config.has_key? port
+      end
       
-      dn = Dynomite::Node.new( node_config )
+      dn = Dynomite::Node.new( Dynomite::Config.hash_dup )
 
       if Dynomite::Config[:join]
         dn.start(:join=>Dynomite::Config[:join])
