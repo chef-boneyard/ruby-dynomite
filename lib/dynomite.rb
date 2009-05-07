@@ -1,3 +1,3 @@
 
-require 'dynomite/client'
+# require 'dynomite/client'
 require 'dynomite/node'

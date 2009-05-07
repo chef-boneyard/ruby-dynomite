@@ -90,7 +90,7 @@ module Dynomite
           stdin, stdout, stderr = '', '', ''
           process_status = spawn commandline, 'stdin' => stdin, 'stdout' => stdout, 'stderr' => stderr
         else
-          system(commandline)
+          exec commandline
         end
 
         self
