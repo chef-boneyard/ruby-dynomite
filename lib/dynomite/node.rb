@@ -83,7 +83,7 @@ module Dynomite
         log_clause =  log_directory.empty? ? "" : %Q[-kernel error_logger '{file,"#{File.join(log_directory, 'dynomite.log')}"}' -sasl sasl_error_logger '{file,"#{File.join(log_directory, 'sasl.log')}"}']
         detach_clause  = self.detached.nil? ? "" : " -detached "
         
-        commandline = %Q[erl -boot start_sasl +K true +A 128 +P 60000 -smp enable -pz #{install_path}/ebin/ -pz #{install_path}/deps/mochiweb/ebin -pz #{install_path}/deps/rfc4627/ebin -pz #{install_path}/deps/thrift/ebin -sname \"#{self.node_name}\" ] + join_clause + log_clause + %Q[ -dynomite config  "\\"#{configfile.path}\\"" -setcookie #{cookie} -noshell -run dynomite start ] + detach_clause
+        commandline = %Q[erl -boot start_sasl +K true +A 128 +P 60000 -smp enable -pz #{install_path}/ebin/ -pz #{install_path}/deps/mochiweb/ebin -pz #{install_path}/deps/rfc4627/ebin -pz #{install_path}/deps/thrift/ebin -name \"#{self.node_name}\" ] + join_clause + log_clause + %Q[ -dynomite config  "\\"#{configfile.path}\\"" -setcookie #{cookie} -noshell -run dynomite start ] + detach_clause
        #  #{options[:profile]}"
 
         if detached
